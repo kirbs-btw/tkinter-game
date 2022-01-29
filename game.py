@@ -15,6 +15,9 @@ class player:
         self.widget = canvas
         self.root = root
 
+    def show(self):
+        print(f"posx: {self.posx}")
+        print(f"posy: {self.posy}")
 
 class enemy:
     def __init__(self, x, y, canvas, root, width):
@@ -23,6 +26,10 @@ class enemy:
         self.widget = canvas
         self.root = root
         self.width = width
+
+    def show(self):
+        print(f"posx: {self.posx}")
+        print(f"posy: {self.posy}")
 
 enemy = player(None, None, None, None)
 
@@ -56,14 +63,25 @@ def moveD():
     player.widget.destroy()
     player.widget = tk.Canvas(player.root, bg="#325599", width=50, height=50)
     player.widget.place(x=player.posx, y=player.posy)
+    doChecks()
+
+def doChecks():
     enemyMove()
+    collisionCheck()
+
+def doFail():
+    print("you lose")
+
+def collisionCheck():
+    if player.posx == enemy.posx and player.posy == enemy.posy:
+        doFail()
 
 def moveA():
     player.posx -= 50
     player.widget.destroy()
     player.widget = tk.Canvas(player.root, bg="#325599", width=50, height=50)
     player.widget.place(x=player.posx, y=player.posy)
-    enemyMove()
+    doChecks()
 
 def instanceEnemy():
     if enemy.widget != None:
