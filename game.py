@@ -31,6 +31,10 @@ class enemy:
         print(f"posx: {self.posx}")
         print(f"posy: {self.posy}")
 
+"""
+initiate the required objects  
+"""
+
 enemy = player(None, None, None, None)
 
 player = player(None, None, None, None)
@@ -39,6 +43,11 @@ player.posy = 450
 
 
 def main():
+    """
+    main function - starts the "game"
+    :return:
+    """
+
     root = tk.Tk()
     canvas = tk.Canvas(root, width=500, height=500)
     canvas.pack()
@@ -59,7 +68,26 @@ def main():
     root.mainloop()
 
 def moveD():
+    """
+    moves the player to the right
+
+    :return:
+    """
     player.posx += 50
+    player.widget.destroy()
+    player.widget = tk.Canvas(player.root, bg="#325599", width=50, height=50)
+    player.widget.place(x=player.posx, y=player.posy)
+    doChecks()
+
+
+
+def moveA():
+    """
+    moves the player to the left
+
+    :return:
+    """
+    player.posx -= 50
     player.widget.destroy()
     player.widget = tk.Canvas(player.root, bg="#325599", width=50, height=50)
     player.widget.place(x=player.posx, y=player.posy)
@@ -71,17 +99,14 @@ def doChecks():
 
 def doFail():
     print("you lose")
+    enemy.widget.destroy()
+    player.widget.destroy()
+
+    player.root.create_text(250, 100, text="you lose!", font=("Gotham Black", 25))
 
 def collisionCheck():
     if player.posx == enemy.posx and player.posy == enemy.posy:
         doFail()
-
-def moveA():
-    player.posx -= 50
-    player.widget.destroy()
-    player.widget = tk.Canvas(player.root, bg="#325599", width=50, height=50)
-    player.widget.place(x=player.posx, y=player.posy)
-    doChecks()
 
 def instanceEnemy():
     if enemy.widget != None:
